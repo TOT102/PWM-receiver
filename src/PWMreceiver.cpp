@@ -16,8 +16,8 @@ PWMReceiver::~PWMReceiver() {
 
 void PWMReceiver::readData() {
   for (size_t i = 0; i < numChannels; i++) {
-    // Uncomment the line below and use analogRead to read the PWM signal from the pin
-    // channelData[i] = analogRead(pins[i]);
+    int rawValue = analogRead(pins[i]); 
+    channelData[i] = map(rawValue, 0, 1023, 0, 100);
   }
 }
 
