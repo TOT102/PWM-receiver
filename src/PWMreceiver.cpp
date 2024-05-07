@@ -15,9 +15,20 @@ PWMReceiver::~PWMReceiver() {
 }
 
 void PWMReceiver::readData() {
-  for (size_t i = 0; i < numChannels; i++) {
+  for (size_t pin = 0; pin < numChannels; pin++) {
+    unsigned long pulseWidthHigh = pulseIn(pin, HIGH);
+    unsigned long pulseWidthLow = pulseIn(pin, LOW);
+    unsigned long period = pulseWidthHigh + pulseWidthLow;
+
+    if (period == 0) {
+       channelData[pin] = 0;
+    } else {
+      double dutyCycle = (double)pulseWidthHigh / (double)period * 100.0;
+       channelData[pin] = dutyCycle;
+    }
+    /*
     int rawValue = analogRead(pins[i]); 
-    channelData[i] = map(rawValue, 0, 1023, 0, 100);
+    channelData[i] = map(rawValue, 0, 1023, 0, 100);*/
   }
 }
 
