@@ -14,6 +14,12 @@ PWMReceiver::~PWMReceiver() {
   delete[] channelData;
 }
 
+void begin(){
+  for (int i = 0; i < numChannels; i++){
+    pinMode(pins[i], INPUT);
+  }
+}
+
 void PWMReceiver::readData() {
   for (size_t pin = 0; pin < numChannels; pin++) {
     unsigned long pulseWidthHigh = pulseIn(pin, HIGH);
